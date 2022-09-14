@@ -32,6 +32,13 @@ module SplitwiseClone
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+
+    config.generators do |g|
+      g.test_framework :rspec, fixture: false
+    
+      g.view_specs false
+      g.helper_specs false
+      g.system_tests nil
+    end
   end
 end
