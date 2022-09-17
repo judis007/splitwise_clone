@@ -1,0 +1,17 @@
+<h1><i><%= "#{@group.name&.capitalize} - Expenses" %></i></h1><br>
+
+<%= link_to "Add Expense", new_group_expense_path(@group.id), class: 'btn btn-warning' %><br><br>
+
+<% if @expenses.empty? %>
+    <h3>There are no expenses. Add one now.</h3><br>
+<% else %>
+    <% @expenses.each do |expense| %>
+        <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"><%= link_to expense.category, group_expense_path(@group.id, expense) %></h5>
+            <h6 class="card-text"><%= expense.name&.capitalize %></h6>
+            <h6 class="card-text"><%= expense.expense %></h6>
+        </div>
+        </div>
+    <% end %>
+<% end %>

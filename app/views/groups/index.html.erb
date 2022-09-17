@@ -1,0 +1,12 @@
+<h1>Groups</h1>
+
+<% if @groups.present? %>
+    <ul>
+    <% @groups.each do |group| %>
+        <li><%= link_to group.name, group_path(group) %>. Friends: <%= group.users&.count %></li>
+        
+    <% end %>
+    </ul>
+<% else %>
+    <h4>There are no groups at the moment. Create one by clicking the above button.</h4>
+<% end %>

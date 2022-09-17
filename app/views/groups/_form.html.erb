@@ -1,0 +1,9 @@
+<%= form_with model: group do |f| %>
+    <%= f.label "Name of the group:" %>
+    <%= f.text_field :name %><br><br>
+
+    <%= f.label "Add friends:" %>
+    <%= select_tag "friends", options_from_collection_for_select(@users, "id", "name"), multiple: true %><br><br>
+
+    <%= f.submit %>
+<% end %>

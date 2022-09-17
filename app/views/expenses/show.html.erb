@@ -1,0 +1,6 @@
+Category: <%= @expense.category %><br>
+Total Expense: <%= @expense.expense %><br>
+
+<% @liabilities.each do |liability| %>
+    Expense for <%= User.find(liability.user_id).name %>: <%= liability.amount %><br>
+<% end %>
