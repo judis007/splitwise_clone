@@ -1,19 +1,19 @@
 <%= form_with url: "/groups/#{@group_id}/expenses", method: "post" do |f| %>
 
     <%= f.label "Category: " %>
-    <%= f.select :category, @categories %><br><br>
+    <%= f.select :category, @categories, required: true %><br><br>
 
     <%= f.label "Currency: " %>
-    <%= f.select :currency, currency_codes %><br><br>
+    <%= f.select :currency, currency_codes, required: true %><br><br>
 
     <%= f.label "Name the expense: " %>
-    <%= f.text_field :name, placeholder: "Give a random name", class: 'form-control' %><br>
+    <%= f.text_field :name, placeholder: "Give a random name", class: 'form-control', required: true %><br>
 
     <%= f.label "Total amount: " %>
-    <%= f.number_field :expense, class: 'form-control' %><br>
+    <%= f.number_field :expense, class: 'form-control', required: true %><br>
 
     <%= f.label "Paid by: " %>
-    <%= f.collection_select :friend, @friends, :id, :name, class: 'form-control' %><br>
+    <%= f.collection_select :friend, @friends, :id, :name, class: 'form-control', required: true %><br>
 
     <%= f.submit %>
 <% end %>

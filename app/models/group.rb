@@ -1,9 +1,12 @@
 class Group < ApplicationRecord
   before_save :lowercase
+
   has_many :expenses, dependent: :destroy
   has_and_belongs_to_many :users
   
   has_one_attached :cover_picture, dependent: :destroy
+
+  validates_presence_of :name
 
   class << self
     def desc_order
@@ -15,7 +18,7 @@ class Group < ApplicationRecord
     end
 
     def search query
-      if query.empty?
+      if query.nil?
         Group.desc_order
       else
         group = Group.sql_like(query)
