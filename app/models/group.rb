@@ -1,23 +1,25 @@
+# frozen_string_literal: true
+
 class Group < ApplicationRecord
   before_save :lowercase
 
   has_many :expenses, dependent: :destroy
   has_and_belongs_to_many :users
-  
+
   has_one_attached :cover_picture, dependent: :destroy
 
   validates_presence_of :name
 
   class << self
     def desc_order
-      Group.all.order("created_at DESC")
+      Group.all.order('created_at DESC')
     end
 
-    def sql_like query
-      Group.where("name LIKE (?)", "%#{query.downcase}%")
+    def sql_like(query)
+      Group.where('name LIKE (?)', "%#{query.downcase}%")
     end
 
-    def search query
+    def search(query)
       if query.nil?
         Group.desc_order
       else
@@ -32,6 +34,6 @@ class Group < ApplicationRecord
   end
 
   def lowercase
-    self.name&.downcase!
+    name&.downcase!
   end
 end

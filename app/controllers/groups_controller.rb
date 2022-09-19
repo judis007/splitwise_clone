@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_group, only: %i[show edit update destroy]
@@ -10,7 +12,7 @@ class GroupsController < ApplicationController
   def show
     @expenses = @group.expenses
   end
-  
+
   def new
     @group = Group.new
   end
@@ -19,7 +21,7 @@ class GroupsController < ApplicationController
     @group = Group.new group_params
     @group.user_ids = params.require :friends
     current_user.group_ids = params[:id]
-    
+
     if @group.save
       redirect_to root_path
     else
@@ -35,7 +37,6 @@ class GroupsController < ApplicationController
     else
       render 'edit'
     end
-
   end
 
   def destroy

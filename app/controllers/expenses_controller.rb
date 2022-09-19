@@ -1,9 +1,14 @@
+# frozen_string_literal: true
+
 class ExpensesController < ApplicationController
   before_action :find_group, only: %i[show new create]
 
   def index
     respond_to do |format|
-      format.csv { send_data GenerateBillJob.perform_now(params[:expense_id]), filename: "bill-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
+      format.csv do
+        send_data GenerateBillJob.perform_now(params[:expense_id]),
+                  filename: "bill-#{DateTime.now.strftime('%d%m%Y%H%M')}.csv"
+      end
     end
   end
 
@@ -38,23 +43,24 @@ class ExpensesController < ApplicationController
     params.permit :category, :name, :currency, :expense, :group_id
   end
 
-  def create_liabilities friends, expense
+  def create_liabilities(friends, expense)
     friend_paid = params[:friend].to_i
     total_amount = expense.expense
     split_amount = total_amount / friends.count
     creditor_amount = total_amount - split_amount
 
-    Liability.transaction do 
+    Liability.transaction do
       liabilities = []
       friends.each do |friend|
-        if friend == friend_paid
-          liabilities << Liability.new(name: 'credit', user_id: friend, expense_id: expense.id, amount: creditor_amount)
-        else
-          liabilities << Liability.new(name: 'debit', user_id: friend, expense_id: expense.id, amount: split_amount, liable_to: friend_paid)
-        end
+        liabilities << if friend == friend_paid
+                         Liability.new(name: 'credit', user_id: friend, expense_id: expense.id, amount: creditor_amount)
+                       else
+                         Liability.new(name: 'debit', user_id: friend, expense_id: expense.id, amount: split_amount,
+                                       liable_to: friend_paid)
+                       end
       end
       Liability.import! liabilities
-    rescue ActiveRecord::RecordInvalid => exception
+    rescue ActiveRecord::RecordInvalid => e
       false
     end
   end
@@ -62,5 +68,4 @@ class ExpensesController < ApplicationController
   def find_group
     @group = Group.find params[:group_id]
   end
-
 end

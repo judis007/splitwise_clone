@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Liability < ApplicationRecord
   belongs_to :expense
   belongs_to :user
