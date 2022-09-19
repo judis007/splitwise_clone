@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   before_action :users, only: %i[new edit]
 
   def index
-    @groups = Group.all
+    @groups = Group.search(params[:query])
   end
 
   def show
