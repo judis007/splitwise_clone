@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ExpensesController < ApplicationController
-  before_action :find_group, only: %i[show new create]
+  before_action :find_group, only: %i[show new create destroy]
+  before_action :find_expense, only: %i[show destroy]
 
   def index
     respond_to do |format|
@@ -13,7 +14,6 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    @expense = Expense.find(params[:id])
     @liabilities = @expense.liabilities
   end
 
@@ -37,10 +37,20 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def destroy
+    @expense.destroy
+
+    redirect_to group_path(@group)
+  end
+
   private
 
   def expense_params
     params.permit :category, :name, :currency, :expense, :group_id
+  end
+
+  def find_expense
+    @expense = Expense.find(params[:id])
   end
 
   def create_liabilities(friends, expense)

@@ -1,15 +1,17 @@
 <nav class="navbar navbar-dark bg-dark justify-content-between">
-  <a class="navbar-brand"><i>SplitWise</i></a>
-  
-  <div class = "navbar-nav">
-    <%= form_with url: groups_path, method: 'get' do |f| %>
-      <%= f.text_field :query, placeholder: "Search for a Group" %>
-    <% end %>
-  </div>
+  <i><%= link_to "SplitWise", root_path, class: 'navbar-brand' %></i>
 
   <% if user_signed_in? %>
-    <div class="navbar-nav">
-        <%= link_to "CREATE GROUP", new_group_path, class: "btn btn-warning" %>
+
+    <div class = "navbar-nav">
+      <%= form_with url: groups_path, method: 'get' do |f| %>
+        <%= f.text_field :query, placeholder: "Search for a Group" %>
+      <% end %>
     </div>
+    
+      <div class="navbar-nav">
+          <%= link_to "CREATE GROUP", new_group_path, class: "btn btn-warning" %>
+      </div>
+      
   <% end %>
 </nav>

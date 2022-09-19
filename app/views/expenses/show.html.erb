@@ -1,4 +1,5 @@
 <%= link_to "Download the Bill", group_expenses_path(format: 'csv', expense_id: @expense.id), class: 'btn btn-warning' %><br><br>
+<%= button_to 'Delete', { controller: "expenses", action: "destroy", expense_id: @expense.id }, method: :delete, class: 'btn btn-danger' %>
 
 <b>Category:</b> <%= @expense.category %><br>
 <b>Total Expense:</b> <%= @expense.expense %><br><br>
