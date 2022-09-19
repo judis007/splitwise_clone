@@ -1,24 +1,24 @@
-# README
+# *SplitWise application clone*
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a expense sharing application where you can add your expenses and split it among different people. The application keeps balances between people as in who owes how much to whom.
 
-Things you may want to cover:
+## How to set up the application in your computer
 
-* Ruby version
+ 1. First you need to clone this repository. For that, launch the terminal and type
 
-* System dependencies
+     git clone https://github.com/judis007/splitwise_clone.git
 
-* Configuration
+ 2. Now in order to move to that folder type
 
-* Database creation
+     cd splitwise_clone
 
-* Database initialization
+ 3. You need to setup the database and seed the data. For that type
 
-* How to run the test suite
+     rails db:setup
 
-* Services (job queues, cache servers, search engines, etc.)
+ 4. Now everything has been setup. Now you need to run the server. Type
 
-* Deployment instructions
+     rails server
 
-* ...
+ 
+
