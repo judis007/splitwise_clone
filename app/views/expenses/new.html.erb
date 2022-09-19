@@ -7,13 +7,13 @@
     <%= f.select :currency, currency_codes %><br><br>
 
     <%= f.label "Name the expense: " %>
-    <%= f.text_field :name, placeholder: "Give a random name" %><br><br>
+    <%= f.text_field :name, placeholder: "Give a random name", class: 'form-control' %><br>
 
     <%= f.label "Total amount: " %>
-    <%= f.text_field :expense %><br><br>
+    <%= f.number_field :expense, class: 'form-control' %><br>
 
     <%= f.label "Paid by: " %>
-    <%= f.collection_select :friend, @friends, :id, :name %><br>
+    <%= f.collection_select :friend, @friends, :id, :name, class: 'form-control' %><br>
 
     <%= f.submit %>
 <% end %>

@@ -1,6 +1,12 @@
 class ExpensesController < ApplicationController
   before_action :find_group, only: %i[show new create]
 
+  def index
+    respond_to do |format|
+      format.csv { send_data GenerateBillJob.perform_now(params[:expense_id]), filename: "bill-#{DateTime.now.strftime("%d%m%Y%H%M")}.csv" }
+    end
+  end
+
   def show
     @expense = Expense.find(params[:id])
     @liabilities = @expense.liabilities
@@ -17,32 +23,39 @@ class ExpensesController < ApplicationController
     expense = Expense.create expense_params
     friends = @group.users.ids
 
-    create_liabilities friends, expense
+    liabilities_created = create_liabilities friends, expense
 
-    redirect_to group_path(@group.id)
+    if liabilities_created && expense
+      redirect_to group_path(@group.id)
+    else
+      render new
+    end
   end
 
   private
 
   def expense_params
-    params.permit :category, :name, :expense, :group_id
+    params.permit :category, :name, :currency, :expense, :group_id
   end
 
   def create_liabilities friends, expense
     friend_paid = params[:friend].to_i
     total_amount = expense.expense
     split_amount = total_amount / friends.count
+    creditor_amount = total_amount - split_amount
 
     Liability.transaction do 
       liabilities = []
       friends.each do |friend|
         if friend == friend_paid
-          liabilities << Liability.new(name: 'credit', user_id: friend, expense_id: expense.id, amount: split_amount)
+          liabilities << Liability.new(name: 'credit', user_id: friend, expense_id: expense.id, amount: creditor_amount)
         else
-          liabilities << Liability.new(name: 'debit', user_id: friend, expense_id: expense.id, amount: split_amount)
+          liabilities << Liability.new(name: 'debit', user_id: friend, expense_id: expense.id, amount: split_amount, liable_to: friend_paid)
         end
       end
       Liability.import! liabilities
+    rescue ActiveRecord::RecordInvalid => exception
+      false
     end
   end
 

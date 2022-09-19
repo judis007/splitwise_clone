@@ -1,6 +1,12 @@
-Category: <%= @expense.category %><br>
-Total Expense: <%= @expense.expense %><br>
+<%= link_to "Download the Bill", group_expenses_path(format: 'csv', expense_id: @expense.id), class: 'btn btn-warning' %><br><br>
+
+<b>Category:</b> <%= @expense.category %><br>
+<b>Total Expense:</b> <%= @expense.expense %><br><br>
 
 <% @liabilities.each do |liability| %>
-    Expense for <%= User.find(liability.user_id).name %>: <%= liability.amount %><br>
+    <% if liability.credit? %>
+        <p class = "text-success"><%= User.find(liability.user_id).name %> needs to be credited <%= liability.amount&.round(2) %><i><%= @expense.currency %></i></p><br>
+    <% elsif liability.debit? %>
+        <p class = "text-danger"><%= User.find(liability.user_id).name %> owes <%= liability.amount&.round(2) %> <i><%= @expense.currency %></i> to <%= User.find(liability.liable_to).name %></p><br>
+    <% end %>
 <% end %>

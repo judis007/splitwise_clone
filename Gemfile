@@ -16,6 +16,7 @@ gem 'bootstrap', '~> 5.2'
 gem 'money-rails', '~>1.12'
 gem 'activerecord-import', '~> 1.4'
 gem 'faker', '~> 2.23'
+gem 'turbo-rails'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

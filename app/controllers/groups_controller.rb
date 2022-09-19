@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_group, only: %i[show edit update]
+  before_action :find_group, only: %i[show edit update destroy]
+  before_action :users, only: %i[new edit]
 
   def index
     @groups = Group.all
@@ -11,7 +12,6 @@ class GroupsController < ApplicationController
   end
   
   def new
-    @users = User.all
     @group = Group.new
   end
 
@@ -38,13 +38,23 @@ class GroupsController < ApplicationController
 
   end
 
+  def destroy
+    @group.destroy
+
+    redirect_to root_path, status: :see_other
+  end
+
   private
 
   def group_params
-    params.require(:group).permit :name
+    params.require(:group).permit :name, :cover_picture
   end
 
   def find_group
     @group = Group.find params[:id]
+  end
+
+  def users
+    @users = User.all
   end
 end

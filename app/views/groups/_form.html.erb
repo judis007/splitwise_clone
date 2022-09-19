@@ -1,9 +1,14 @@
 <%= form_with model: group do |f| %>
-    <%= f.label "Name of the group:" %>
+    <%= f.label "Name of the group:", class: 'form-label' %>
     <%= f.text_field :name %><br><br>
 
-    <%= f.label "Add friends:" %>
-    <%= select_tag "friends", options_from_collection_for_select(@users, "id", "name"), multiple: true %><br><br>
+    <%= f.label "Please upload a cover picture" %>
+    <%= f.file_field :cover_picture, class: 'form-control' %><br>
 
-    <%= f.submit %>
-<% end %>
+    <%= f.label "Add friends:", class: 'form-label' %>
+    <%= select_tag "friends", options_from_collection_for_select(@users, "id", "name"), multiple: true, class: 'form-control' %><br><br>
+
+    <%= f.submit "Submit", class: 'btn btn-success' %>
+<% end %><br>
+
+<%= link_to "Go Back", groups_path, class: 'btn btn-secondary' %>
