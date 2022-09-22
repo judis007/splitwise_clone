@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'activerecord-import', '~> 1.4'
+gem 'annotate', '~> 3.2'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.2'
 gem 'devise', '~> 4.8', '>= 4.8.1'
