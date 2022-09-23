@@ -10,11 +10,13 @@ gem 'annotate', '~> 3.2'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.2'
 gem 'devise', '~> 4.8', '>= 4.8.1'
+gem 'factory_bot_rails', '~> 6.2'
 gem 'faker', '~> 2.23'
 gem 'money-rails', '~>1.12'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.3', '>= 7.0.3.1'
+gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
 gem 'rubocop'
 gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
