@@ -1,4 +1,4 @@
-liability_name = [0, 1]
+liability_name = %w[debit credit]
 
 FactoryBot.define do
   factory :liability do 
