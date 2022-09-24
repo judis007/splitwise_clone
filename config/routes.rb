@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   root 'groups#index'
 
   resources :groups do
-    resources :expenses
+    resources :expenses, except: [:edit, :update]
   end
 end
